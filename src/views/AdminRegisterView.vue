@@ -1,57 +1,60 @@
 <template>
-  <el-form
-    ref="ruleFormRef"
-    style="max-width: 600px"
-    :model="ruleForm"
-    label-width="auto"
-    class="demo-ruleForm"
-  >
-    <el-form-item label="Password">
-      <el-input v-model="ruleForm.pass" type="password" autocomplete="off" />
-    </el-form-item>
-    <el-form-item label="Confirm">
-      <el-input
-        v-model="ruleForm.checkPass"
-        type="password"
-        autocomplete="off"
-      />
-    </el-form-item>
-    <el-form-item label="Age">
-      <el-input v-model.number="ruleForm.age" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm">Submit</el-button>
-      <el-button @click="resetForm">Reset</el-button>
-    </el-form-item>
-  </el-form>
+  <ContentBase>
+    <template #header>
+      <div>管理员注册</div>
+    </template>
+    <template #body>
+      <el-form class="form-container" :model="ruleForm" label-width="auto">
+        <el-form-item label="用户名">
+          <el-input v-model="ruleForm.username" placeholder="Please input" />
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="ruleForm.passward" placeholder="Please input" />
+        </el-form-item>
+        <el-form-item class="form-buttons">
+          <el-button type="primary" @click="submitForm">登录</el-button>
+        </el-form-item>
+      </el-form>
+    </template>
+  </ContentBase>
 </template>
-        
-      <script lang="ts" setup>
-import { reactive, ref } from "vue";
-import type { FormInstance } from "element-plus";
 
-const ruleFormRef = ref<FormInstance>();
+<script lang="ts">
+import { reactive } from "vue";
+import ContentBase from "../components/ContentBase.vue";
 
-const ruleForm = reactive({
-  pass: "",
-  checkPass: "",
-  age: "",
-});
-
-const submitForm = () => {
-  console.log("submit!", ruleForm);
-};
-
-const resetForm = () => {
-  if (ruleFormRef.value) {
-    ruleFormRef.value.resetFields();
-  }
+export default {
+  name: "AdminLoginView",
+  components: {
+    ContentBase,
+  },
+  setup() {
+    const ruleForm = reactive({
+      username: "",
+      passward: "",
+    });
+    const submitForm = () => {
+      console.log("Form submitted:", ruleForm);
+    };
+    return {
+      ruleForm,
+      submitForm,
+    };
+  },
 };
 </script>
-      
-      <style scoped>
-.demo-ruleForm {
-  max-width: 600px;
+
+<style scoped>
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
 }
 </style>
-      
