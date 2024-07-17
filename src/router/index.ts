@@ -12,7 +12,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/studentlogin/',
+    path: '/users/studentlogin/',
     name: 'studentlogin',
     component: StudentLoginView
   },
@@ -22,7 +22,7 @@ const routes = [
     component: StudentInfoView
   },
   {
-    path: '/studenregister/',
+    path: '/users/studentregister/',
     name: 'studentregister',
     component: StudentRegisterView
   },

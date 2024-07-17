@@ -1,16 +1,14 @@
 <template>
-  <div class="common-layout">
-    <el-container>
-      <el-header>Header</el-header>
-      <el-main>Main</el-main>
-      <el-footer>Footer</el-footer>
-    </el-container>
-  </div>
+  <StudentManagement />
 </template>
 
 <script lang="ts">
+import StudentManagement from "@/components/StudentManagement.vue";
 export default {
   name: "StudentInfoView",
+  components: {
+    StudentManagement,
+  },
 };
 </script>
 

@@ -12,7 +12,7 @@
           <el-input v-model="ruleForm.passward" placeholder="Please input" />
         </el-form-item>
         <el-form-item class="form-buttons">
-          <el-button type="primary" @click="submitForm">登录</el-button>
+          <el-button type="primary" @click="submitForm">注册</el-button>
         </el-form-item>
       </el-form>
     </template>
