@@ -54,7 +54,7 @@ export default {
             message: r.msg,
             type: "success",
           });
-          router.push({ name: "studentinfo" }); // 跳转到学生信息页面
+          router.push({ name: "home" }); // 跳转到学生信息页面
         } else {
           ElMessage.error(r.msg);
         }

@@ -1,7 +1,7 @@
 <template>
   <el-table :data="filterTableData" style="width: 100%">
-    <el-table-column label="Name" prop="name" />
-    <el-table-column label="Date" prop="date" />
+    <el-table-column label="Username" prop="username" />
+    <el-table-column label="Password" prop="password" />
     <el-table-column align="right">
       <template #header>
         <el-input v-model="search" size="small" placeholder="Type to search" />
@@ -23,47 +23,47 @@
 </template>
 
 <script lang="ts">
-import { computed, ref } from "vue";
+import { computed, ref, onMounted } from "vue";
+import axios from "axios";
 
 interface User {
-  date: string;
-  name: string;
-  address: string;
+  username: string;
+  password: string;
 }
 
 export default {
   name: "StudentManagement",
   setup() {
     const search = ref("");
+    const tableData = ref<User[]>([]);
 
-    const tableData: User[] = [
-      {
-        date: "2016-05-03",
-        name: "Tom",
-        address: "No. 189, Grove St, Los Angeles",
-      },
-      {
-        date: "2016-05-02",
-        name: "John",
-        address: "No. 189, Grove St, Los Angeles",
-      },
-      {
-        date: "2016-05-04",
-        name: "Morgan",
-        address: "No. 189, Grove St, Los Angeles",
-      },
-      {
-        date: "2016-05-01",
-        name: "Jessy",
-        address: "No. 189, Grove St, Los Angeles",
-      },
-    ];
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/users/studentinfo/"
+        );
+        if (response.data.code === 200) {
+          tableData.value = response.data.data;
+          console.log("Fetched data:", tableData.value);
+        } else {
+          console.error("Failed to fetch data:", response.data.msg);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    onMounted(() => {
+      fetchData().catch((error) => {
+        console.error("Error on mounting:", error);
+      });
+    });
 
     const filterTableData = computed(() =>
-      tableData.filter(
+      tableData.value.filter(
         (data) =>
           !search.value ||
-          data.name.toLowerCase().includes(search.value.toLowerCase())
+          data.username.toLowerCase().includes(search.value.toLowerCase())
       )
     );
 
@@ -86,4 +86,16 @@ export default {
 </script>
 
 <style scoped>
+.form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: center;
+}
 </style>

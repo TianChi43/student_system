@@ -27,12 +27,12 @@ const routes = [
     component: StudentRegisterView
   },
   {
-    path: '/adminlogin/',
+    path: '/users/adminlogin/',
     name: 'adminlogin',
     component: AdminLoginView
   },
   {
-    path: '/adminregister/',
+    path: '/users/adminregister/',
     name: 'adminregister',
     component: AdminRegisterView
   },
