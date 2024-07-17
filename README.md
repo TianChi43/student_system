@@ -1,24 +1,2 @@
-# student_system2
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+项目大致完成 实现管理员与学生的登陆，注册，配置完了路由，管理员登陆后跳转到学生信息列表，学生登陆后跳转到首页，学生信息用表格展示，完成分页展示数据，完成增查 还未完成前端页面删除和编辑功能，使用vue+ts+mongoDB+elementui实现
