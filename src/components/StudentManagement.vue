@@ -1,25 +1,38 @@
 <template>
-  <el-table :data="filterTableData" style="width: 100%">
-    <el-table-column label="Username" prop="username" />
-    <el-table-column label="Password" prop="password" />
-    <el-table-column align="right">
-      <template #header>
-        <el-input v-model="search" size="small" placeholder="Type to search" />
-      </template>
-      <template #default="scope">
-        <el-button size="small" @click="handleEdit(scope.$index, scope.row)">
-          Edit
-        </el-button>
-        <el-button
-          size="small"
-          type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-        >
-          Delete
-        </el-button>
-      </template>
-    </el-table-column>
-  </el-table>
+  <div>
+    <el-table :data="paginatedData" style="width: 100%">
+      <el-table-column label="Username" prop="username" />
+      <el-table-column label="Password" prop="password" />
+      <el-table-column align="right">
+        <template #header>
+          <el-input
+            v-model="search"
+            size="small"
+            placeholder="Type to search"
+          />
+        </template>
+        <template #default="scope">
+          <el-button size="small" @click="handleEdit(scope.$index, scope.row)">
+            Edit
+          </el-button>
+          <el-button
+            size="small"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >
+            Delete
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <el-pagination
+      @current-change="handleCurrentChange"
+      :current-page="currentPage"
+      :page-size="pageSize"
+      :total="filterTableData.length"
+      layout="prev, pager, next"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -36,6 +49,8 @@ export default {
   setup() {
     const search = ref("");
     const tableData = ref<User[]>([]);
+    const currentPage = ref(1);
+    const pageSize = ref(5);
 
     const fetchData = async () => {
       try {
@@ -67,6 +82,16 @@ export default {
       )
     );
 
+    const paginatedData = computed(() => {
+      const start = (currentPage.value - 1) * pageSize.value;
+      const end = start + pageSize.value;
+      return filterTableData.value.slice(start, end);
+    });
+
+    const handleCurrentChange = (page: number) => {
+      currentPage.value = page;
+    };
+
     const handleEdit = (index: number, row: User) => {
       console.log(index, row);
     };
@@ -78,6 +103,10 @@ export default {
     return {
       search,
       filterTableData,
+      paginatedData,
+      currentPage,
+      pageSize,
+      handleCurrentChange,
       handleEdit,
       handleDelete,
     };
